@@ -1,62 +1,50 @@
 'use strict';
 
-var sprite = require('./lib/css-sprite');
-var through2 = require('through2');
-var vfs = require('vinyl-fs');
-var fs = require('graceful-fs');
-var mkdirp = require('mkdirp');
-var path = require('path');
-var replaceExtension = require('./lib/replace-extension');
 var _ = require('lodash');
-var noop = function () {};
+var vfs = require('vinyl-fs');
+var ifStream = require('ternary-stream');
 
-var writeFile = function (file, enc, cb) {
-  var stream = this;
-  mkdirp(file.base, function () {
-    fs.writeFile(file.path, file.contents, function () {
-      stream.push(file);
-      cb();
-    });
-  });
-};
+var tile = require('./lib/tile');
+var layout = require('./lib/layout');
+var sprite = require('./lib/sprite');
+var style = require('./lib/style');
+var toVinyl = require('./lib/to-vinyl');
+var logger = require('./lib/util/log');
 
 var defaults = {
-  src: null,
-  out: '',
-  name: 'sprite',
-  style: null,
-  format: 'png',
-  cssPath: '../images',
-  processor: 'css',
-  template: null,
-  orientation: 'vertical',
-  retina: false,
-  background: '#FFFFFF',
-  margin: 4,
-  opacity: 0,
-  sort: true
+  'src': null,
+  'out': '',
+  'name': 'sprite',
+  'style': null,
+  'dimension': [{ratio: 1, dpi: 72}],
+  'engine': 'css-sprite-lwip',
+  'format': 'png',
+  'cssPath': '../images',
+  'processor': 'css-sprite-css',
+  'template': null,
+  'orientation': 'vertical',
+  'background': '#FFFFFF',
+  'margin': 4,
+  'opacity': 0,
+  'sort': true,
+  'split': false,
+  'style-indent-char': 'space',
+  'style-indent-size': 2,
+  'logger': logger.nolog
 };
 
 module.exports = {
   /*
-   *  Creates sprite and css file
+   *  creates sprite and css file and save them to disk
    */
   create: function (o, cb) {
-    if (!o.src) {
-      throw new Error('glob missing');
-    }
-    if (!o.out) {
-      throw new Error('output dir missing');
-    }
-
-    var opts = _.extend({}, defaults, o);
-    if (opts.style && path.basename(opts.style).indexOf('.') === -1) {
-      opts.style = path.join(opts.style, replaceExtension(opts.name, '.' + opts.processor));
-    }
-    vfs.src(opts.src)
-      .pipe(sprite(opts))
-      .pipe(through2.obj(writeFile))
-      .on('data', noop)
+    this.src(o)
+      .pipe(vfs.dest(o.out))
+      .on('error', function (err) {
+        if (_.isFunction(cb)) {
+          cb(err);
+        }
+      })
       .on('end', function () {
         if (_.isFunction(cb)) {
           cb();
@@ -64,11 +52,28 @@ module.exports = {
       });
   },
   /*
-   *  Takes a vinyl-fs Readable/Writable stream of images
-   *  returns a Readable/Writable stream of vinyl files of the sprite and css file
+   *  returns a Readable/Writable stream of vinyl objects with sprite and css files
    */
-  stream: function (o) {
+  src: function (o) {
+    if (!o.src) {
+      throw new Error('glob missing');
+    }
+
+    if (!o.out) {
+      throw new Error('output dir missing');
+    }
+
     var opts = _.extend({}, defaults, o);
-    return sprite(opts);
+
+    var hasStyle = function () {
+      return !!opts.style;
+    };
+
+    return vfs.src(opts.src)
+      .pipe(tile(opts))
+      .pipe(layout(opts))
+      .pipe(sprite(opts))
+      .pipe(ifStream(hasStyle, style(opts)))
+      .pipe(toVinyl(opts));
   }
 };

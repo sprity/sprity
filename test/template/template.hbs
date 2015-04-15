@@ -1,0 +1,25 @@
+{{#each layouts}}
+  {{#each sprites}}
+
+    {{#if dpi}}
+    @media (-webkit-min-device-pixel-ratio: {{ratio}}), (min-resolution: {{dpi}}dpi) {
+    {{/if}}
+    .testClass {
+      background-image: url('{{escimage url}}');
+      {{#if dpi}}
+      background-size: {{width}} {{height}};
+      {{/if}}
+    }
+    {{#if dpi}}
+    }
+    {{/if}}
+  {{/each}}
+
+  {{#each layout.items}}
+  .{{../classname}}-{{meta.name}} {
+    background-position: {{x}} {{y}};
+    width: {{width}}px;
+    height: {{height}}px;
+  }
+  {{/each}}
+{{/each}}

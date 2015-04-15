@@ -1,6 +1,6 @@
 # css-sprite
 
-[![NPM version](https://badge.fury.io/js/css-sprite.svg)](http://badge.fury.io/js/css-sprite) [![Build Status](https://travis-ci.org/aslansky/css-sprite.svg?branch=master)](https://travis-ci.org/aslansky/css-sprite) [![Coverage Status](https://img.shields.io/coveralls/aslansky/css-sprite.svg)](https://coveralls.io/r/aslansky/css-sprite) [![Code Climate](https://codeclimate.com/github/aslansky/css-sprite/badges/gpa.svg)](https://codeclimate.com/github/aslansky/css-sprite) [![Dependencies](https://david-dm.org/aslansky/css-sprite.svg)](https://david-dm.org/aslansky/css-sprite)
+[![NPM version](https://badge.fury.io/js/css-sprite.svg)](http://badge.fury.io/js/css-sprite) [![Build Status](https://travis-ci.org/aslansky/css-sprite.svg?branch=1.0)](https://travis-ci.org/aslansky/css-sprite) [![Coverage Status](https://img.shields.io/coveralls/aslansky/css-sprite.svg)](https://coveralls.io/r/aslansky/css-sprite) [![Code Climate](https://codeclimate.com/github/aslansky/css-sprite/badges/gpa.svg)](https://codeclimate.com/github/aslansky/css-sprite) [![Dependencies](https://david-dm.org/aslansky/css-sprite.svg)](https://david-dm.org/aslansky/css-sprite)
 
 > A css sprite generator.
 
@@ -37,23 +37,28 @@ out     path of directory to write sprite file to
 src     glob strings to find source images to put into the sprite
 
 Options:
-    -b, --base64           create css with base64 encoded sprite (css file will be written to <out>)
-    -c, --css-image-path   http path to images on the web server (relative to css path or absolute path)  [../images]
-    -f, --format           output format of the sprite (png or jpg)  [png]
-    -n, --name             name of sprite file without file extension   [sprite]
-    -p, --processor        output format of the css. one of css, less, sass, scss or stylus  [css]
-    -t, --template         output template file, overrides processor option
-    -r, --retina           generate both retina and standard sprites. src images have to be in retina resolution
-    -s, --style            file to write css to, if omitted no css is written
-    -w, --watch            continuously create sprite
-    --background           background color of the sprite in hex  [#FFFFFF]
-    --cachebuster          appends a "cache buster" to the background image in the form "?<...>" (random)  [false]
-    --margin               margin in px between tiles  [4]
-    --interpolation        Interpolation algorithm used when scaling retina images (nearest-neighbor|moving-average|linear|grid|cubic|lanczos)
-    --opacity              background opacity of the sprite. defaults to 0 when png or 100 when jpg  [0]
-    --orientation          orientation of the sprite image (vertical|horizontal|binary-tree)  [vertical]
-    --prefix               prefix for the class name used in css (without .)
-    --no-sort              disable sorting of layout
+   -b, --base64           create css with base64 encoded sprite (css file will be written to <out>)
+   -c, --css-image-path   http path to images on the web server (relative to css path or absolute path)  [../images]
+   -d, --dimension        the used dimensions for the sprite. A combination of ratio and dpi. For example -d 2:192 would generate a sprite for device-pixel-ratio:2 and min-resolution: 192dpi.
+                          Multiple dimensions are allowed. Defaults to 1:72
+   -e, --engine           image processing engine  [css-sprite-lwip]
+   -f, --format           output format of the sprite (png or jpg)  [png]
+   -n, --name             name of sprite file without file extension   [sprite]
+   -p, --processor        style processing module  [css-sprite-css]
+   -t, --template         output template file, overrides processor option
+   -s, --style            file to write css to, if omitted no css is written
+   -w, --watch            continuously create sprite
+   --background           background color of the sprite in hex  [#FFFFFF]
+   --cachebuster          appends a "cache buster" to the background image in the form "?<...>" (random)  [false]
+   --margin               margin in px between tiles  [4]
+   --interpolation        Interpolation algorithm used when scaling retina images (nearest-neighbor|moving-average|linear|grid|cubic|lanczos)
+   --opacity              background opacity (0 - 100) of the sprite. defaults to 0 when png or 100 when jpg  [0]
+   --orientation          orientation of the sprite image (vertical|horizontal|binary-tree)  [vertical]
+   --prefix               prefix for the class name used in css (without .)
+   --no-sort              disable sorting of layout
+   --split                create sprite images for every sub folder  [false]
+   --style-indent-char    Character used for indentation of styles (space|tab)  [space]
+   --style-indent-size    Number of characters used for indentation of styles  [2]
 ```
 
 ## Programatic usage
@@ -102,142 +107,26 @@ sprite.create({
 ```js
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
-var sprite = require('css-sprite').stream;
+var sprite = require('css-sprite');
 
 // generate sprite.png and _sprite.scss
 gulp.task('sprites', function () {
-  return gulp.src('./src/img/*.png')
-    .pipe(sprite({
-      name: 'sprite',
-      style: '_sprite.scss',
-      cssPath: './img',
-      processor: 'scss'
-    }))
-    .pipe(gulpif('*.png', gulp.dest('./dist/img/'), gulp.dest('./dist/scss/')))
+  return sprite.src({
+    src: './src/img/*.png'
+    name: 'sprite',
+    style: 'sprite.css',
+    cssPath: './img'
+  })
+  .pipe(gulpif('*.png', gulp.dest('./dist/img/'), gulp.dest('./dist/css/')))
 });
-// generate scss with base64 encoded images
-gulp.task('base64', function () {
-  return gulp.src('./src/img/*.png')
-    .pipe(sprite({
-      base64: true,
-      style: '_base64.scss',
-      processor: 'scss'
-    }))
-    .pipe(gulp.dest('./dist/scss/'));
-});
-```
-
-Options to use `css-sprite` with [Gulp](http://gulpjs.com) are the same as for the `sprite.create` function with the exception of `src` and `out`.
 
 ## Usage with [Grunt](http://gruntjs.com)
 
-Add `css-sprite` as a dependency to your grunt project and then use something like this in your `gruntfile.js`:
-
-```js
-module.exports = function(grunt) {
-
-  // Project configuration.
-  grunt.initConfig({
-    css_sprite: {
-      options: {
-        'cssPath': '../images',
-        'processor': 'css',
-        'orientation': 'vertical',
-        'margin': 4
-      },
-      sprite: {
-        options: {
-          'style': 'dest/css/sprite.css'
-        },
-        src: ['src/images/*', 'src/images2/*'],
-        dest: 'dest/images/sprite.png',
-      },
-      base64: {
-        options: {
-          'base64': true
-        },
-        src: ['src/images/*'],
-        dest: 'dest/scss/base64.css',
-      }
-    }
-  });
-
-  // Load the plugin that provides the "css-sprite" task.
-  grunt.loadNpmTasks('css-sprite');
-
-  // Default task(s).
-  grunt.registerTask('default', ['css_sprite']);
-};
-```
-
-Options to use `css-sprite` with [Grunt](http://gruntjs.com) are the same as for the `sprite.create` function with the exception of `src` and `out`.
-
-
-## Usage with [sass](http://sass-lang.com/) / [less](http://lesscss.org/) / [stylus](http://learnboost.github.io/stylus/)
-
-#### [scss](http://sass-lang.com/) example
-
-```scss
-@import 'sprite'; // the generated style file (sprite.scss)
-
-// camera icon (camera.png in src directory)
-.icon-camera {
-  @include sprite($camera);
-}
-
-// cart icon (cart.png in src directory)
-.icon-cart {
-  @include sprite($cart);
-}
-```
-
-#### [sass](http://sass-lang.com/) example
-
-```sass
-@import 'sprite' // the generated style file (sprite.sass)
-
-// camera icon (camera.png in src directory)
-.icon-camera
-  +sprite($camera)
-
-// cart icon (cart.png in src directory)
-.icon-cart
-  +sprite($cart)
-```
-
-#### [less](http://lesscss.org/) example
-
-```less
-@import 'sprite'; // the generated style file (sprite.less)
-
-// camera icon (camera.png in src directory)
-.icon-camera {
-  .sprite(@camera);
-}
-
-// cart icon (cart.png in src directory)
-.icon-cart {
-  .sprite(@cart);
-}
-```
-
-#### [stylus](http://learnboost.github.io/stylus/) example
-
-```stylus
-@import 'sprite' // the generated style file (sprite.styl)
-
-// camera icon (camera.png in src directory)
-.icon-camera
-  sprite($camera)
-
-// cart icon (cart.png in src directory)
-.icon-cart
-  sprite($cart)
-```
+You can use the [css-sprite grunt plugin](https://npmjs.org/package/css-sprite)
 
 ## Using your own template
 
-To use your own [mustache](http://mustache.github.io/) template for style file creation pass in the -t option followed by the template path. The following variables are available in the mustache template:
+To use your own [handlebars](http://handlebarsjs.com/) template for style file creation pass in the -t option followed by the template path. The following variables are available in the handlebars template:
 
 * **items** -- array of objects with the sprite tiles
   * **name** -- name of the tile
@@ -265,4 +154,4 @@ To use your own [mustache](http://mustache.github.io/) template for style file c
   * **px** -- object with pixel values
     * **total_width**, **total_height**
 
-Please have a look at the [included templates](https://github.com/aslansky/css-sprite/tree/master/lib/templates) to see how they work.
+If you want to redistribute your template you can also write a custom style processor.

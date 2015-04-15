@@ -2,8 +2,9 @@
 'use strict';
 
 var sprite = require('../index');
-// var gaze = require('gaze');
+var log = require('../lib/util/log').cli;
 var fs = require('vinyl-fs');
+
 var opts = require('nomnom')
   .option('out', {
     position: 0,
@@ -30,6 +31,24 @@ var opts = require('nomnom')
     default: '../images',
     help: 'http path to images on the web server (relative to css path or absolute path)'
   })
+  .option('dimension', {
+    abbr: 'd',
+    list: true,
+    default: [{ratio: 1, dpi: 72}],
+    transform: function (value) {
+      value = value.split(':');
+      return {
+        ratio: Number(value[0]),
+        dpi: Number(value[1])
+      };
+    },
+    help: 'the used dimensions for the sprite. A combination of ratio and dpi. For example -d 2:192 would generate a sprite for device-pixel-ratio:2 and min-resolution: 192dpi. Multiple dimensions are allowed. Defaults to 1:72'
+  })
+  .option('engine', {
+    abbr: 'e',
+    default: 'css-sprite-lwip',
+    help: 'image processing engine'
+  })
   .option('format', {
     abbr: 'f',
     choices: ['png', 'jpg'],
@@ -43,18 +62,12 @@ var opts = require('nomnom')
   })
   .option('processor', {
     abbr: 'p',
-    choices: ['css', 'less', 'sass', 'scss', 'stylus'],
-    default: 'css',
-    help: 'output format of the css. one of css, less, sass, scss or stylus'
+    default: 'css-sprite-css',
+    help: 'style processing module'
   })
   .option('template', {
     abbr: 't',
     help: 'output template file, overrides processor option'
-  })
-  .option('retina', {
-    abbr: 'r',
-    flag: true,
-    help: 'generate both retina and standard sprites. src images have to be in retina resolution'
   })
   .option('style', {
     abbr: 's',
@@ -70,7 +83,7 @@ var opts = require('nomnom')
     help: 'background color of the sprite in hex'
   })
   .option('cachebuster', {
-    choices: ['random'],
+    flag: true,
     default: false,
     help: 'appends a "cache buster" to the background image in the form "?<...>" (random)'
   })
@@ -85,7 +98,7 @@ var opts = require('nomnom')
   })
   .option('opacity', {
     default: 0,
-    help: 'background opacity of the sprite. defaults to 0 when png or 100 when jpg'
+    help: 'background opacity (0 - 100) of the sprite. defaults to 0 when png or 100 when jpg'
   })
   .option('orientation', {
     choices: ['vertical', 'horizontal', 'binary-tree'],
@@ -99,17 +112,34 @@ var opts = require('nomnom')
     flag: true,
     help: 'disable sorting of layout'
   })
+  .option('split', {
+    flag: true,
+    default: false,
+    help: 'create sprite images for every sub folder'
+  })
+  .option('style-indent-char', {
+    choices: ['space', 'tab'],
+    default: 'space',
+    help: 'Character used for indentation of styles (space|tab)'
+  })
+  .option('style-indent-size', {
+    default: 2,
+    help: 'Number of characters used for indentation of styles'
+  })
   .script('css-sprite')
   .parse();
+
+opts.logger = log;
+opts.cli = true;
 
 if (opts.watch) {
   if (opts['no-sort']) {
     opts.sort = false;
   }
-  console.log('Watching for file changes ...');
+  log('Watching for file changes ...');
   fs.watch(opts.src, function () {
     sprite.create(opts, function () {
-      console.log('> Sprite created in ' + opts.out);
+      log.success('Sprite created in ' + opts.out);
     });
   });
 }
@@ -118,5 +148,7 @@ else {
     opts.sort = false;
   }
 
-  sprite.create(opts);
+  sprite.create(opts, function () {
+    log.success('Sprite created in ' + opts.out);
+  });
 }

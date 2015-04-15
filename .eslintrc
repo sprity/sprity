@@ -1,0 +1,23 @@
+env:
+  node: true
+
+rules:
+  indent: [2, 2]
+  brace-style: [1, "stroustrup"]
+  comma-style: [1, "last"]
+  comma-spacing: [1, {"before": false, "after": true}]
+  default-case: 2
+  eol-last: [1, true]
+  guard-for-in: 2
+  no-floating-decimal: 2
+  no-nested-ternary: 2
+  no-undefined: 2
+  quotes: [1, "single", "avoid-escape"]
+  radix: 2
+  space-after-keywords: [2, "always"]
+  space-before-function-paren: "always"
+  space-before-blocks: [1, 2]
+  spaced-line-comment: [1, "always", { exceptions: ["-"]}]
+  strict: [2, "global"]
+  valid-jsdoc: [2, { prefer: { "return": "returns"}}]
+  wrap-iife: 2

@@ -1,0 +1,38 @@
+$camera: 0 0 136 136
+$cart: 0 136 136 136
+$command: 0 272 136 136
+$font: 0 408 136 136
+$jpg: 0 544 520 520
+
+=sprite-width($sprite)
+  width: nth($sprite, 3)
+
+=sprite-height($sprite)
+  height: nth($sprite, 4)
+
+=sprite-position($sprite)
+  $sprite-offset-x: nth($sprite, 1)
+  $sprite-offset-y: nth($sprite, 2)
+  background-position: $sprite-offset-x  $sprite-offset-y
+
+=sprite($sprite, $display: block)
+  +sprite-position($sprite)
+  background-repeat: no-repeat
+  overflow: hidden
+  display: $display
+  +sprite-width($sprite)
+  +sprite-height($sprite)
+}
+
+.icon
+  background-image: url('../images/sprite.png')
+
+@media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)
+  .icon
+    background-image: url('../images/sprite@1.5x.png')
+    background-size: 390 798
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)
+  .icon
+    background-image: url('../images/sprite@2x.png')
+    background-size: 520 1064

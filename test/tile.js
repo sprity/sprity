@@ -13,7 +13,7 @@ var opts = {
   name: 'sprite'
 };
 
-describe('css-sprite tile (lib/tile.js)', function () {
+describe('sprity tile (lib/tile.js)', function () {
   it('should return a stream with one tile object', function (done) {
     var count = 0;
     vfs.src('./test/fixtures/camera.png')

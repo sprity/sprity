@@ -15,7 +15,7 @@ var opts = {
   sort: true
 };
 
-describe('css-sprite layout (lib/layout.js)', function () {
+describe('sprity layout (lib/layout.js)', function () {
 
   it('should return a stream with one layout object', function (done) {
     var count = 0;

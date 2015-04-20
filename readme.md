@@ -1,157 +1,185 @@
-# css-sprite
+# sprity
 
-[![NPM version](https://badge.fury.io/js/css-sprite.svg)](http://badge.fury.io/js/css-sprite) [![Build Status](https://travis-ci.org/aslansky/css-sprite.svg?branch=1.0)](https://travis-ci.org/aslansky/css-sprite) [![Coverage Status](https://img.shields.io/coveralls/aslansky/css-sprite.svg)](https://coveralls.io/r/aslansky/css-sprite) [![Code Climate](https://codeclimate.com/github/aslansky/css-sprite/badges/gpa.svg)](https://codeclimate.com/github/aslansky/css-sprite) [![Dependencies](https://david-dm.org/aslansky/css-sprite.svg)](https://david-dm.org/aslansky/css-sprite)
+[![NPM version](https://badge.fury.io/js/sprity.svg)](http://badge.fury.io/js/sprity) [![Build Status](https://travis-ci.org/sprity/sprity.svg?branch=1.0)](https://travis-ci.org/sprity/sprity) [![Coverage Status](https://img.shields.io/coveralls/sprity/sprity.svg)](https://coveralls.io/r/sprity/sprity) [![Code Climate](https://codeclimate.com/github/sprity/sprity/badges/gpa.svg)](https://codeclimate.com/github/sprity/sprity) [![Dependencies](https://david-dm.org/sprity/sprity.svg)](https://david-dm.org/sprity/sprity)
 
-> A css sprite generator.
+> A modular image sprite generator.
 
-> Generates sprites and proper css files out of a directory of images.
+> Generates sprites and proper style files out of a directory of images.
 
 > Supports retina sprites.
 
 > Can inline base64 encoded sprites.
 
-## Requirements
+> Supports different output formats
 
-Starting with version 0.9 `css-sprite` has no external dependencies
+> Supports different image engines
+
 
 ## Install
 
-Install with [npm](https://npmjs.org/package/css-sprite)
+Install with [npm](https://npmjs.org/package/sprity)
 
 ```
-npm install css-sprite --save
+npm install sprity --save
 ```
 
-If you want to use `css-sprite` on your cli install with:
+If you want to use `sprity` on your cli install with:
 
 ```
-npm install css-sprite -g
+npm install sprity -g
 ```
 
-## Command Line Interface
+## Usage
+
+### CLI
+
+`sprity` can be used in your command line. If you installed `sprity` globally, just type `sprity --help` to see all the command line options.
 
 ```sh
-Usage: css-sprite <out> <src>... [options]
-
-out     path of directory to write sprite file to
-src     glob strings to find source images to put into the sprite
-
-Options:
-   -b, --base64           create css with base64 encoded sprite (css file will be written to <out>)
-   -c, --css-image-path   http path to images on the web server (relative to css path or absolute path)  [../images]
-   -d, --dimension        the used dimensions for the sprite. A combination of ratio and dpi. For example -d 2:192 would generate a sprite for device-pixel-ratio:2 and min-resolution: 192dpi.
-                          Multiple dimensions are allowed. Defaults to 1:72
-   -e, --engine           image processing engine  [css-sprite-lwip]
-   -f, --format           output format of the sprite (png or jpg)  [png]
-   -n, --name             name of sprite file without file extension   [sprite]
-   -p, --processor        style processing module  [css-sprite-css]
-   -t, --template         output template file, overrides processor option
-   -s, --style            file to write css to, if omitted no css is written
-   -w, --watch            continuously create sprite
-   --background           background color of the sprite in hex  [#FFFFFF]
-   --cachebuster          appends a "cache buster" to the background image in the form "?<...>" (random)  [false]
-   --margin               margin in px between tiles  [4]
-   --interpolation        Interpolation algorithm used when scaling retina images (nearest-neighbor|moving-average|linear|grid|cubic|lanczos)
-   --opacity              background opacity (0 - 100) of the sprite. defaults to 0 when png or 100 when jpg  [0]
-   --orientation          orientation of the sprite image (vertical|horizontal|binary-tree)  [vertical]
-   --prefix               prefix for the class name used in css (without .)
-   --no-sort              disable sorting of layout
-   --split                create sprite images for every sub folder  [false]
-   --style-indent-char    Character used for indentation of styles (space|tab)  [space]
-   --style-indent-size    Number of characters used for indentation of styles  [2]
+sprity out/ images/*.png -s style.css
 ```
 
-## Programatic usage
-```
-var sprite = require('css-sprite');
-sprite.create(options, cb);
-```
+### Programatic usage
 
-### Options
-* **src:** Array or string of globs to find source images to put into the sprite.  [required]
-* **out:** path of directory to write sprite file to  [process.cwd()]
-* **base64:** when true instead of creating a sprite writes base64 encoded images to css (css file will be written to `<out>`)
-* **cssPath:** http path to images on the web server (relative to css path or absolute)  [../images]
-* **format** format of the generated sprite (png or jpg). By default uses png.
-* **name:** name of the sprite file without file extension  [sprite]
-* **processor:** output format of the css. one of css, less, sass, scss or stylus  [css]
-* **template:** output template file, overrides processor option (must be a [mustache](http://mustache.github.io/) template)
-* **retina:** generate both retina and standard sprites. src images have to be in retina resolution
-* **background** background color of the sprite in hex. Defaults to #FFFFFF
-* **cachebuster** appends a "cache buster" to the background image in the form "?<...>" (random)  [false]
-* **style:** file to write css to, if omitted no css is written
-* **margin:** margin in px between tiles.  (Use an even number if generating retina sprites).  [4]
-* **opacity** background opacity of the sprite between 0 and 100. Defaults to 0 when png or 100 when jpg
-* **orientation:** orientation of the sprite image (vertical|horizontal|binary-tree) [vertical]
-* **prefix:** prefix for the class name used in css (without .) [icon]
-* **sort:** enable/disable sorting of layout [true]
-* **interpolation** Interpolation algorithm used when scaling retina images to standard definition. Possible values are `nearest-neighbor`,`moving-average`,`linear`,`grid`,`cubic`,`lanczos`. Defaults to `grid`.
-
-
-### Example
 ```js
-var sprite = require('css-sprite');
-sprite.create({
-  src: ['./src/img/*.png'],
-  out: './dist/img'
-  name: 'sprites',
-  style: './dist/scss/_sprites.scss',
-  cssPath: '../img',
-  processor: 'scss'
-}, function () {
-  console.log('done');
-});
+var sprity = require('sprity');
+sprity.create(options, cb);
 ```
 
-## Usage with [Gulp](http://gulpjs.com)
+### With [Gulp](http://gulpjs.com)
+
 ```js
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
-var sprite = require('css-sprite');
+var sprity = require('sprity');
 
 // generate sprite.png and _sprite.scss
 gulp.task('sprites', function () {
-  return sprite.src({
-    src: './src/img/*.png'
-    name: 'sprite',
-    style: 'sprite.css',
-    cssPath: './img'
-  })
+  return sprity.src(options})
   .pipe(gulpif('*.png', gulp.dest('./dist/img/'), gulp.dest('./dist/css/')))
 });
+```
 
-## Usage with [Grunt](http://gruntjs.com)
+### With [Grunt](http://gruntjs.com)
 
-You can use the [css-sprite grunt plugin](https://npmjs.org/package/css-sprite)
+See [grunt-sprity](https://npmjs.org/package/grunt-sprity) for how to use `sprity` with [Grunt](http://gruntjs.com).
 
-## Using your own template
+## Options
 
-To use your own [handlebars](http://handlebarsjs.com/) template for style file creation pass in the -t option followed by the template path. The following variables are available in the handlebars template:
+* **src:**               Array or string of globs to find source images to put into the sprite.  [required]
+* **out:**               path of directory to write sprite file to  [*Default:* process.cwd()]
+* **base64:**            inlines base64 encoded sprites in the style file
+* **css-image-path:**    path or url of sprites on the web server used to reference the sprite in the styles (relative or absolute path or full url)  [*Default:* ../images]
+* **dimension:**         used dimensions for the sprite. A combination of ratio and dpi. Read more about dimensions: [How to specify dimensions](#how-to-specify-dimensions)
+* **engine**             image processing engine.  Read more about engines: [Image processing engines](#image-processing-engines) [*Default:* lwip]
+* **name**               name of sprite file without file extension [*Default:* sprite]
+* **processor**          style processing module. Read more about style processors: [Style processors](#style-processors) [css]
+* **template**           output template file, overrides processor option. Read more about templates: [Templates](#templates)
+* **style**              file to write css to, if omitted no css is written
+* **background**         background color of the sprite in hex  [*Default:* #FFFFFF]
+* **cachebuster**        appends a "cache buster" to the background image in the form "?<...>" (Boolean)  [*Default:* false]
+* **margin**             margin in px between tiles  [*Default:* 4]
+* **opacity**            background opacity (0 - 100) of the sprite. defaults to 0 when png or 100 when jpg [*Default:* 0]
+* **orientation**        orientation of the sprite image (vertical|horizontal|binary-tree)  [*Default:* vertical]
+* **prefix**             prefix for the class name used in css (without .)
+* **no-sort**            disable sorting of layout. Read more about: [Layout algorithms](https://github.com/twolfson/layout#algorithms)
+* **split**              create sprite images for every sub folder [*Default:* false]
+* **style-indent-char**  Character used for indentation of styles (space|tab) [*Default:* space]
+* **style-indent-size**  Number of characters used for indentation of styles  [*Default:* 2]
 
-* **items** -- array of objects with the sprite tiles
-  * **name** -- name of the tile
-  * **x** -- x position
-  * **y** -- y position
-  * **width**
-  * **height**
-  * **offset_x** -- x offset within the sprite
-  * **offset_y** -- y offset within the sprite
-  * **class** -- class name of the tile
-  * **px** -- object with pixel values instead of raw data (e.g width: '250px')
-      * **x**, **y**, **offset_x**, **offset_y**, **height**, **width**, **total_height**, **total_width**
-* **sprite** -- object with information about the sprite itself
-  * **name** -- name of the sprite
-  * **image** -- css path to sprite or base64 encode string
-  * **escaped_image** -- escaped css path to sprite or base64 encode string
-  * **class** -- class name of the sprite
-* **retina** -- object with information about the retina sprite
-  * **name** -- name of the retina sprite
-  * **image** -- css path to retina sprite
-  * **escaped_image** -- escaped css path to retina sprite
-  * **class** -- class name of the retina sprite
-  * **total_width** -- height of the retina sprite (for background-size)
-  * **total_height** -- width of the retina sprite (for background-size)
-  * **px** -- object with pixel values
-    * **total_width**, **total_height**
+## How to specify dimensions
 
-If you want to redistribute your template you can also write a custom style processor.
+Dimensions are used to specify different sizes of sprites. You can for example create a normal and a retina sprite by providing the following object to `sprity's` options:
+
+```js
+'dimension': [{
+  ratio: 1, dpi: 72
+}, {
+  ratio: 2, dpi: 192
+}],
+```
+
+On command line this would work as follows:
+
+```sh
+sprity out/ images/*.png -s style.css -d 1:72 -d 2:192
+```
+
+You can provide as many dimensions as you want. Just keep in mind that the source images you provide need to be for the biggest dimension. For the example the images would need to have 192dpi.
+
+## Image processing engines
+
+`sprity` can use different image processing engines. `sprity` uses the engine to create and manipulate the sprites. Image processing engines may have there specific requirements. So before installing one please have a look at the documentation of the engine.
+
+### Installation
+
+Since image engines are just node.js modules you can install them with npm.
+
+```sh
+npm install <engine-name>
+# or if you installed sprity globally
+npm install <engine-name> -g
+```
+
+### Usage
+
+You can switch image engines with the engine option. If the image engine name starts with `sprity-` you can omit that. For example to use [sprity-canvas](https://npmjs.org/package/sprity-canvas):
+
+```sh
+sprity out/ images/*.png -s style.css --engine canvas
+# or
+sprity out/ images/*.png -s style.css --engine sprity-canvas
+```
+
+### Available image processing engines
+
+* [sprity-lwip](https://npmjs.org/package/sprity-lwip) - the default engine. is automatically installed, when installing `sprity`
+* [sprity-canvas](https://npmjs.org/package/sprity-canvas) - uses [node-canvas](https://github.com/Automattic/node-canvas) to create sprites. Has some non-nodejs requirements.
+
+### Write your own
+
+You can find more about how to write an image processing engine for `sprity` in the [sprity wiki](https://github.com/sprity/sprity/wiki/How-to-write-a-sprity-image-processor-engine)
+
+## Style processors
+
+Style processors generate are used for the generation of the style files. By default `sprity` can create css files, but with the help of style processors it can generate a lot of different formats.
+
+### Installation
+
+Style processors are simple node modules, you can install them with npm:
+
+```sh
+npm install <processor-name>
+# or if you installed sprity globally
+npm install <processor-name> -g
+```
+
+### Usage
+
+You can switch style processors with the processor option. If the processor name starts with `sprity-` you can omit that. For example to use [sprity-sass](https://npmjs.org/package/sprity-sass):
+
+```sh
+sprity out/ images/*.png -s style.scss --processor sass
+# or
+sprity out/ images/*.png -s style.scss --processor sprity-sass
+```
+
+### Available style processors
+
+* [sprity-css](https://npmjs.org/package/sprity-css) - the default style processor. is automatically installed, when installing `sprity`
+* [sprity-sass](https://npmjs.org/package/sprity-sass) - generates scss or sass files
+* [sprity-less](https://npmjs.org/package/sprity-less) - generates less files
+
+### Write your own
+
+You can find more about how to write your own style processor in the [sprity wiki](https://github.com/sprity/sprity/wiki/How-to-write-a-sprity-style-processor)
+
+## Templates
+
+If you don't want to write a processor module or you only need a simple template for one of you're projects you can use the templating system of `sprity`.
+
+`sprity` uses [http://handlebarsjs.com/](Handlebars) to process your templates. To quickly start you can use the templates from [sprity-css](https://github.com/sprity/sprity-css/blob/master/template/css.hbs) as a starting point.
+
+### Available variables
+
+You can find more about the variables and functions available in the handlebars templates in the [sprity wiki](https://github.com/sprity/sprity/wiki/Available-variable-in-custom-templates)

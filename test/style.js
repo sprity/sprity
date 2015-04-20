@@ -15,7 +15,7 @@ beforeEach(function () {
   opts = {
     'style-indent-char': 'space',
     'style-indent-size': 2,
-    'processor': 'css-sprite-css'
+    'processor': 'css'
   };
 
   var l = layout('top-down');
@@ -52,7 +52,7 @@ beforeEach(function () {
   };
 });
 
-describe('css-sprite style (lib/style.js)', function () {
+describe('sprity style (lib/style.js)', function () {
 
   it('should return a stream with one style object', function (done) {
     var count = 0;

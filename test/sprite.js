@@ -40,7 +40,7 @@ beforeEach(function () {
   };
 });
 
-describe('css-sprite sprite (lib/sprite.js)', function () {
+describe('sprity sprite (lib/sprite.js)', function () {
 
   it('should return a stream with one sprite object', function (done) {
     var count = 0;

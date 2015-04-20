@@ -39,7 +39,7 @@ beforeEach(function () {
   };
 });
 
-describe('css-sprite to-vinyl (lib/to-vinyl.js)', function () {
+describe('sprity to-vinyl (lib/to-vinyl.js)', function () {
 
   it('should return a stream of vinyl objects', function (done) {
     var count = 0;

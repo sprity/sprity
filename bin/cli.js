@@ -46,7 +46,7 @@ var opts = require('nomnom')
   })
   .option('engine', {
     abbr: 'e',
-    default: 'css-sprite-lwip',
+    default: 'lwip',
     help: 'image processing engine'
   })
   .option('format', {
@@ -62,7 +62,7 @@ var opts = require('nomnom')
   })
   .option('processor', {
     abbr: 'p',
-    default: 'css-sprite-css',
+    default: 'css',
     help: 'style processing module'
   })
   .option('template', {
@@ -126,7 +126,7 @@ var opts = require('nomnom')
     default: 2,
     help: 'Number of characters used for indentation of styles'
   })
-  .script('css-sprite')
+  .script('sprity')
   .parse();
 
 opts.logger = log;

@@ -2,7 +2,6 @@ $camera: 0 0 136 136;
 $cart: 0 136 136 136;
 $command: 0 272 136 136;
 $font: 0 408 136 136;
-$jpg: 0 544 520 520;
 @mixin sprite-width($sprite) {
   width: nth($sprite, 3);
 }
@@ -30,18 +29,4 @@ $jpg: 0 544 520 520;
 }
 .icon {
   background-image: url("../images/sprite.png");
-}
-@media (-webkit-min-device-pixel-ratio: 1.5),
-(min-resolution: 144dpi) {
-  .icon {
-    background-image: url("../images/sprite@1.5x.png");
-    background-size: 390 798;
-  }
-}
-@media (-webkit-min-device-pixel-ratio: 2),
-(min-resolution: 192dpi) {
-  .icon {
-    background-image: url("../images/sprite@2x.png");
-    background-size: 520 1064;
-  }
 }

@@ -102,4 +102,21 @@ describe('sprity tile (lib/tile.js)', function () {
         done();
       });
   });
+
+  it('should show warning when image is ignored', function (done) {
+    var warn = '';
+    opts.logger = {
+      warn: function (m) {
+        warn = m;
+      }
+    };
+
+    vfs.src('./test/fixtures/**')
+      .pipe(tile(opts))
+      .on('data', noop)
+      .on('end', function () {
+        warn.should.equal('Ignoring /Users/alexander/Development/sprity/sprity/test/fixtures/fail.txt');
+        done();
+      });
+  });
 });

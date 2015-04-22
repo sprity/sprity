@@ -49,34 +49,34 @@
     "gulpfriendly"
   ],
   "dependencies": {
-    "async": "^0.9.0",
-    "bluebird": "^2.9.16",
+    "bluebird": "^2.9.24",
     "color": "^0.8.0",
     "colors": "^1.0.3",
     "cssesc": "^0.1.0",
-    "fs-extra": "^0.16.5",
-    "handlebars": "^3.0.1",
+    "fs-extra": "^0.18.2",
+    "handlebars": "^3.0.2",
     "imageinfo": "^1.0.4",
     "layout": "~2.2.0",
-    "lodash": "^3.6.0",
-    "lwip": "0.0.6",
+    "lodash": "^3.7.0",
     "nomnom": "^1.8.1",
     "parse-filepath": "^0.5.0",
-    "sprity-css": "^1.0.0",
-    "sprity-lwip": "^1.0.0",
+    "prettydiff": "^1.11.13",
     "ternary-stream": "^1.2.3",
-    "through2": "^0.6.3",
-    "through2-map": "^1.4.0",
-    "through2-spy": "^1.2.0",
+    "through2": "^0.6.5",
     "vinyl": "^0.4.6",
     "vinyl-fs": "^1.0.0"
+  },
+  "optionalDependencies": {
+    "sprity-css": "^1.0.0",
+    "sprity-lwip": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^2.2.0",
     "coveralls": "^2.11.2",
-    "istanbul": "^0.3.7",
-    "mocha": "^2.1.0",
+    "istanbul": "^0.3.13",
+    "mocha": "^2.2.4",
     "mocha-lcov-reporter": "^0.0.2",
-    "object-stream": "0.0.1"
+    "object-stream": "^0.0.1",
+    "through2-spy": "^1.2.0"
   }
 }

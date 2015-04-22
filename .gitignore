@@ -6,3 +6,4 @@ build
 test/dist
 test/out
 npm-debug.log
+todo.md

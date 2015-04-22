@@ -105,7 +105,7 @@ On command line this would work as follows:
 sprity out/ images/*.png -s style.css -d 1:72 -d 2:192
 ```
 
-You can provide as many dimensions as you want. Just keep in mind that the source images you provide need to be for the biggest dimension. For the example the images would need to have 192dpi.
+You can provide as many dimensions as you want. Just keep in mind that the source images you provide need to be for the biggest dimension. For the above example the images would need to have 192dpi.
 
 ## Image processing engines
 

@@ -35,7 +35,8 @@ beforeEach(function () {
   };
 
   style = {
-    style: new Buffer('.test {background: red}')
+    style: new Buffer('.test {background: red}'),
+    extension: '.css'
   };
 });
 

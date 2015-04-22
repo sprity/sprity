@@ -8,17 +8,22 @@ var noop = function () {};
 
 require('mocha');
 
-var opts = {
-  margin: 4,
-  orientation: 'vertical',
-  split: false,
-  sort: true
-};
+var opts = {};
+
+beforeEach(function () {
+  opts = {
+    margin: 4,
+    orientation: 'vertical',
+    split: false,
+    sort: true
+  };
+});
 
 describe('sprity layout (lib/layout.js)', function () {
 
   it('should return a stream with one layout object', function (done) {
     var count = 0;
+    opts.prefix = 'test';
     os.fromArray([{
         base: '/mock/fixtures/',
         height: 100,
@@ -46,6 +51,7 @@ describe('sprity layout (lib/layout.js)', function () {
   it('should return a stream with two layout objects, when folder splitting is activted', function (done) {
     var count = 0;
     opts.split = true;
+    opts.orientation = 'left-right';
     require('object-stream').fromArray([{
         base: '/mock/fixtures/',
         height: 100,
@@ -56,7 +62,7 @@ describe('sprity layout (lib/layout.js)', function () {
         width: 100
       }])
       .pipe(layout(opts))
-      .pipe(spy(function () {
+      .pipe(spy(function (res) {
         count++;
       }))
       .on('data', noop)
@@ -66,4 +72,12 @@ describe('sprity layout (lib/layout.js)', function () {
       });
   });
 
+  it('should throw an error when no layouts where created', function (done) {
+    os.fromArray([{wrongtile: true}, {wrongtile: true}])
+      .pipe(layout(opts))
+      .on('error', function (e) {
+        e.should.have.property('name', 'LayoutError');
+        done();
+      });
+  });
 });

@@ -14,7 +14,6 @@
 
 > Supports different image engines
 
-
 ## Install
 
 Install with [npm](https://npmjs.org/package/sprity)
@@ -72,6 +71,7 @@ See [grunt-sprity](https://npmjs.org/package/grunt-sprity) for how to use `sprit
 * **css-image-path:**    path or url of sprites on the web server used to reference the sprite in the styles (relative or absolute path or full url)  [*Default:* ../images]
 * **dimension:**         used dimensions for the sprite. A combination of ratio and dpi. Read more about dimensions: [How to specify dimensions](#how-to-specify-dimensions)
 * **engine**             image processing engine.  Read more about engines: [Image processing engines](#image-processing-engines) [*Default:* lwip]
+* **format**             output format of the sprite (Depends on what engine is used) [*Default:* png when used with lwip]
 * **name**               name of sprite file without file extension [*Default:* sprite]
 * **processor**          style processing module. Read more about style processors: [Style processors](#style-processors) [css]
 * **template**           output template file, overrides processor option. Read more about templates: [Templates](#templates)
@@ -183,3 +183,6 @@ If you don't want to write a processor module or you only need a simple template
 ### Available variables
 
 You can find more about the variables and functions available in the handlebars templates in the [sprity wiki](https://github.com/sprity/sprity/wiki/Available-variable-in-custom-templates)
+
+---
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sprity/sprity?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)

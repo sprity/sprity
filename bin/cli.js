@@ -51,9 +51,7 @@ var opts = require('nomnom')
   })
   .option('format', {
     abbr: 'f',
-    choices: ['png', 'jpg'],
-    default: 'png',
-    help: 'output format of the sprite (png or jpg)'
+    help: 'output format of the sprite Default: depends on image processor'
   })
   .option('name', {
     abbr: 'n',

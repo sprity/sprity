@@ -18,7 +18,6 @@ var defaults = {
   'style': null,
   'dimension': [{ratio: 1, dpi: 72}],
   'engine': 'lwip',
-  'format': 'png',
   'cssPath': '../images',
   'processor': 'css',
   'template': null,

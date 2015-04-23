@@ -16,6 +16,8 @@ var mockedImageProcessor = {
   create: function (tiles, opt) {
     return Promise.resolve({
       contents: new Buffer('test', 'utf-8'),
+      type: 'png',
+      mimeType: 'image/png',
       width: 50,
       height: 50
     });
@@ -23,6 +25,8 @@ var mockedImageProcessor = {
   scale: function (base, opt) {
     return Promise.resolve({
       contents: new Buffer('test', 'utf-8'),
+      type: 'png',
+      mimeType: 'image/png',
       width: 25,
       height: 25
     });
@@ -86,43 +90,6 @@ describe('sprity sprite (lib/sprite.js)', function () {
         res.sprites.length.should.equal(1);
         res.should.have.deep.property('sprites[0].name', 'sprite');
         res.sprites[0].url.should.match(/data\:image\/png;base64.*/);
-        count++;
-      }))
-      .on('data', noop)
-      .on('finish', function () {
-        count.should.equal(1);
-        done();
-      });
-  });
-
-  it('should return a stream with one sprite object with base64 encoded jpg', function (done) {
-    var count = 0;
-    opts.format = 'jpg';
-    opts.base64 = true;
-    os.fromArray([mockLayouts])
-      .pipe(sprite(opts))
-      .pipe(spy(function (res) {
-        res.sprites.length.should.equal(1);
-        res.should.have.deep.property('sprites[0].name', 'sprite');
-        res.sprites[0].url.should.match(/data\:image\/jpg;base64.*/);
-        count++;
-      }))
-      .on('data', noop)
-      .on('finish', function () {
-        count.should.equal(1);
-        done();
-      });
-  });
-
-  it('should return a stream with one sprite object with type jpg', function (done) {
-    var count = 0;
-    opts.format = 'jpg';
-    opts.opacity = 0;
-    os.fromArray([mockLayouts])
-      .pipe(sprite(opts))
-      .pipe(spy(function (res) {
-        res.sprites.length.should.equal(1);
-        res.should.have.deep.property('sprites[0].type', 'jpg');
         count++;
       }))
       .on('data', noop)

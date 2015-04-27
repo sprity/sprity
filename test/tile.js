@@ -10,7 +10,14 @@ require('mocha');
 
 var opts = {
   cssPath: '../images',
-  name: 'sprite'
+  name: 'sprite',
+  logger: {
+    log: noop,
+    warn: noop,
+    debug: noop,
+    error: noop,
+    success: noop
+  }
 };
 
 describe('sprity tile (lib/tile.js)', function () {

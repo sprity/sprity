@@ -17,7 +17,14 @@ beforeEach(function () {
     'style-indent-char': 'space',
     'style-indent-size': 2,
     'processor': 'css',
-    'style': 'style'
+    'style': 'style',
+    'logger': {
+      log: noop,
+      warn: noop,
+      debug: noop,
+      error: noop,
+      success: noop
+    }
   };
 
   var l = layout('top-down');

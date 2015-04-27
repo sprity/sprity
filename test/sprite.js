@@ -40,7 +40,14 @@ beforeEach(function () {
     format: 'png',
     cssPath: '../images',
     engine: mockedImageProcessor,
-    dimension: [{ratio: 1, dpi: 72}]
+    dimension: [{ratio: 1, dpi: 72}],
+    logger: {
+      log: noop,
+      warn: noop,
+      debug: noop,
+      error: noop,
+      success: noop
+    }
   };
 
   mockLayout = layout('top-down');

@@ -9,7 +9,7 @@ var layout = require('./lib/layout');
 var sprite = require('./lib/sprite');
 var style = require('./lib/style');
 var toVinyl = require('./lib/to-vinyl');
-var logger = require('./lib/util/log');
+var noop = function () {};
 
 var defaults = {
   'src': null,
@@ -29,12 +29,18 @@ var defaults = {
   'split': false,
   'style-indent-char': 'space',
   'style-indent-size': 2,
-  'logger': logger.nolog
+  'logger': {
+    log: noop,
+    warn: noop,
+    debug: noop,
+    error: noop,
+    success: noop
+  }
 };
 
 module.exports = {
   /*
-   *  creates sprite and css file and save them to disk
+   *  creates sprite and style file and save them to disk
    */
   create: function (o, cb) {
     this.src(o)
@@ -51,7 +57,7 @@ module.exports = {
       });
   },
   /*
-   *  returns a Readable/Writable stream of vinyl objects with sprite and css files
+   *  returns a Readable/Writable stream of vinyl objects with sprite and style files
    */
   src: function (o) {
     if (!o.src) {

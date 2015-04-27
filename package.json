@@ -25,9 +25,6 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "bin": {
-    "sprity": "./bin/cli.js"
-  },
   "scripts": {
     "test": "mocha --reporter spec",
     "coveralls": "istanbul cover _mocha --report lcovonly -- -R spec && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
@@ -45,7 +42,7 @@
     "less",
     "sass",
     "sprity",
-    "css-sprity",
+    "css-sprite",
     "gulpfriendly"
   ],
   "dependencies": {
@@ -68,7 +65,7 @@
   },
   "optionalDependencies": {
     "sprity-css": "^1.0.0",
-    "sprity-lwip": "^1.0.0"
+    "sprity-lwip": "^1.0.2"
   },
   "devDependencies": {
     "chai": "^2.2.0",

@@ -28,6 +28,8 @@ If you want to use `sprity` on your cli install with:
 npm install sprity -g
 ```
 
+Note on io.js: You can use `sprity` with io.js. But the default image processing engine (lwip) is not compatible with io.js. so you need to install a compatible [engine](#image-processing-engines).
+
 ## Usage
 
 ### Programatic usage

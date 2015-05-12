@@ -73,7 +73,6 @@ module.exports = {
     var hasStyle = function () {
       return !!opts.style;
     };
-
     return vfs.src(opts.src)
       .pipe(tile(opts))
       .pipe(layout(opts))

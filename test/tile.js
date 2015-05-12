@@ -122,7 +122,8 @@ describe('sprity tile (lib/tile.js)', function () {
       .pipe(tile(opts))
       .on('data', noop)
       .on('end', function () {
-        warn.should.equal('Ignoring /Users/alexander/Development/sprity/sprity/test/fixtures/fail.txt');
+        warn.should.contain('Ignoring');
+        warn.should.contain('fail.txt');
         done();
       });
   });

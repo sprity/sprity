@@ -1,7 +1,10 @@
 language: node_js
 node_js:
-  - '0.10'
-  - '0.12'
-  - 'iojs'
+- '0.10'
+- '0.12'
+- iojs
 after_script:
-  - npm run coveralls
+- npm run coveralls
+notifications:
+  slack:
+    secure: jnXV/5lOIwCPPpg1Mi/XD8E/7WLARxvtsmjHcsctQEw3DhDs8V54Nn+yM/ph2U+jQ4isi1DQhD7pvHB8U4dPm8RQg0YDq7lOqIn1EYM9mlI7JiTRWKPtlECaZkQeitMvlu/qgmtOJi0XFVDthFb8eMbS47XxRoBuNiJxVdqNjOo=

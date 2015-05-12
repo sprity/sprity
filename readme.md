@@ -30,20 +30,16 @@ npm install sprity -g
 
 ## Usage
 
-### CLI
-
-`sprity` can be used in your command line. If you installed `sprity` globally, just type `sprity --help` to see all the command line options.
-
-```sh
-sprity out/ images/*.png -s style.css
-```
-
 ### Programatic usage
 
 ```js
 var sprity = require('sprity');
 sprity.create(options, cb);
 ```
+
+### CLI
+
+See [sprity-cli](https://npmjs.org/package/sprity-cli) for how to use `sprity` on the command line.
 
 ### With [Gulp](http://gulpjs.com)
 
@@ -68,7 +64,7 @@ See [grunt-sprity](https://npmjs.org/package/grunt-sprity) for how to use `sprit
 * **src:**               Array or string of globs to find source images to put into the sprite.  [required]
 * **out:**               path of directory to write sprite file to  [*Default:* process.cwd()]
 * **base64:**            inlines base64 encoded sprites in the style file
-* **css-image-path:**    path or url of sprites on the web server used to reference the sprite in the styles (relative or absolute path or full url)  [*Default:* ../images]
+* **cssPath:**           path or url of sprites on the web server used to reference the sprite in the styles (relative or absolute path or full url)  [*Default:* ../images]
 * **dimension:**         used dimensions for the sprite. A combination of ratio and dpi. Read more about dimensions: [How to specify dimensions](#how-to-specify-dimensions)
 * **engine**             image processing engine.  Read more about engines: [Image processing engines](#image-processing-engines) [*Default:* lwip]
 * **format**             output format of the sprite (Depends on what engine is used) [*Default:* png when used with lwip]
@@ -117,8 +113,6 @@ Since image engines are just node.js modules you can install them with npm.
 
 ```sh
 npm install <engine-name>
-# or if you installed sprity globally
-npm install <engine-name> -g
 ```
 
 ### Usage
@@ -135,6 +129,7 @@ sprity out/ images/*.png -s style.css --engine sprity-canvas
 
 * [sprity-lwip](https://npmjs.org/package/sprity-lwip) - the default engine. is automatically installed, when installing `sprity`
 * [sprity-canvas](https://npmjs.org/package/sprity-canvas) - uses [node-canvas](https://github.com/Automattic/node-canvas) to create sprites. Has some non-nodejs requirements.
+* [sprity-gm](https://npmjs.org/package/sprity-gm) - uses [gm](https://www.npmjs.com/package/gm) as its image processing library. Requires GraphicsMagick or ImageMagick.
 
 ### Write your own
 
@@ -150,8 +145,6 @@ Style processors are simple node modules, you can install them with npm:
 
 ```sh
 npm install <processor-name>
-# or if you installed sprity globally
-npm install <processor-name> -g
 ```
 
 ### Usage

@@ -1,6 +1,6 @@
 # sprity
 
-[![NPM version](https://badge.fury.io/js/sprity.svg)](http://badge.fury.io/js/sprity) [![Build Status](https://travis-ci.org/sprity/sprity.svg?branch=1.0)](https://travis-ci.org/sprity/sprity) [![Coverage Status](https://img.shields.io/coveralls/sprity/sprity.svg)](https://coveralls.io/r/sprity/sprity) [![Code Climate](https://codeclimate.com/github/sprity/sprity/badges/gpa.svg)](https://codeclimate.com/github/sprity/sprity) [![Dependencies](https://david-dm.org/sprity/sprity.svg)](https://david-dm.org/sprity/sprity)
+[![NPM version](https://badge.fury.io/js/sprity.svg)](http://badge.fury.io/js/sprity) [![Build Status](https://travis-ci.org/sprity/sprity.svg?branch=master)](https://travis-ci.org/sprity/sprity) [![Coverage Status](https://img.shields.io/coveralls/sprity/sprity.svg)](https://coveralls.io/r/sprity/sprity) [![Code Climate](https://codeclimate.com/github/sprity/sprity/badges/gpa.svg)](https://codeclimate.com/github/sprity/sprity) [![Dependencies](https://david-dm.org/sprity/sprity.svg)](https://david-dm.org/sprity/sprity)
 
 > A modular image sprite generator.
 

@@ -43,6 +43,10 @@ module.exports = {
    *  creates sprite and style file and save them to disk
    */
   create: function (o, cb) {
+    if (!o.out) {
+      throw new Error('output dir missing');
+    }
+
     this.src(o)
       .pipe(vfs.dest(o.out))
       .on('error', function (err) {
@@ -62,10 +66,6 @@ module.exports = {
   src: function (o) {
     if (!o.src) {
       throw new Error('glob missing');
-    }
-
-    if (!o.out) {
-      throw new Error('output dir missing');
     }
 
     var opts = _.extend({}, defaults, o);

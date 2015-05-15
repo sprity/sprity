@@ -45,6 +45,8 @@ See [sprity-cli](https://npmjs.org/package/sprity-cli) for how to use `sprity` o
 
 ### With [Gulp](http://gulpjs.com)
 
+You can use the sprity.src method with gulp. It creates a gulp compatible vinyl stream. It takes an options object as it's only argument.
+
 ```js
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
@@ -52,7 +54,10 @@ var sprity = require('sprity');
 
 // generate sprite.png and _sprite.scss
 gulp.task('sprites', function () {
-  return sprity.src(options})
+  return sprity.src({
+    src: './src/images'
+    // ... other optional options
+  }})
   .pipe(gulpif('*.png', gulp.dest('./dist/img/'), gulp.dest('./dist/css/')))
 });
 ```
@@ -63,7 +68,7 @@ See [grunt-sprity](https://npmjs.org/package/grunt-sprity) for how to use `sprit
 
 ## Options
 
-* **src:**               Array or string of globs to find source images to put into the sprite.  [required]
+* **src:**               Array or string of globs to find source images to put into the sprite. Read more about globs [here](https://github.com/isaacs/node-glob) [required]
 * **out:**               path of directory to write sprite file to  [*Default:* process.cwd()]
 * **base64:**            inlines base64 encoded sprites in the style file
 * **cssPath:**           path or url of sprites on the web server used to reference the sprite in the styles (relative or absolute path or full url)  [*Default:* ../images]

@@ -45,7 +45,7 @@ See [sprity-cli](https://npmjs.org/package/sprity-cli) for how to use `sprity` o
 
 ### With [Gulp](http://gulpjs.com)
 
-You can use the sprity.src method with gulp. It creates a gulp compatible vinyl stream. It takes an options object as it's only argument.
+You can use the sprity.src method with gulp. It creates a gulp compatible vinyl stream. It takes an options object as its only argument.
 
 ```js
 var gulp = require('gulp');

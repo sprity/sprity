@@ -1,6 +1,6 @@
 {
   "name": "sprity",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A image sprite generator",
   "license": "MIT",
   "repository": {
@@ -65,7 +65,7 @@
   },
   "optionalDependencies": {
     "sprity-css": "^1.0.1",
-    "sprity-lwip": "^1.0.2"
+    "sprity-lwip": "^1.0.3"
   },
   "devDependencies": {
     "chai": "^2.2.0",

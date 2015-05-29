@@ -55,9 +55,11 @@ var sprity = require('sprity');
 // generate sprite.png and _sprite.scss
 gulp.task('sprites', function () {
   return sprity.src({
-    src: './src/images'
+    src: './src/images/**/*.{png,jpg}',
+    style: './_sprite.scss',
+    processor: 'sass', // make sure you have installed sprity-sass
     // ... other optional options
-  }})
+  })
   .pipe(gulpif('*.png', gulp.dest('./dist/img/'), gulp.dest('./dist/css/')))
 });
 ```

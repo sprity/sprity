@@ -64,7 +64,7 @@
     "vinyl-fs": "^1.0.0"
   },
   "optionalDependencies": {
-    "sprity-css": "^1.0.1",
+    "sprity-css": "^1.0.2",
     "sprity-lwip": "^1.0.3"
   },
   "devDependencies": {

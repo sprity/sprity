@@ -79,7 +79,7 @@ See [grunt-sprity](https://npmjs.org/package/grunt-sprity) for how to use `sprit
 * **name**               name of sprite file without file extension [*Default:* sprite]
 * **processor**          style processing module. Read more about style processors: [Style processors](#style-processors) [css]
 * **template**           output template file, overrides processor option. Read more about templates: [Templates](#templates)
-* **style**              file to write css to, if omitted no css is written
+* **style**              file to write css to, if omitted no css is written (relative to out path)
 * **background**         background color of the sprite in hex  [*Default:* #FFFFFF]
 * **cachebuster**        appends a "cache buster" to the background image in the form "?<...>" (Boolean)  [*Default:* false]
 * **margin**             margin in px between tiles  [*Default:* 4]

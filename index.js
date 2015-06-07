@@ -48,7 +48,9 @@ module.exports = {
     }
 
     this.src(o)
-      .pipe(vfs.dest(o.out))
+      .pipe(vfs.dest(function (file) {
+        return file.base;
+      }))
       .on('error', function (err) {
         if (_.isFunction(cb)) {
           cb(err);

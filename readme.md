@@ -28,8 +28,6 @@ If you want to use `sprity` on your cli install with:
 npm install sprity -g
 ```
 
-Note on io.js: You can use `sprity` with io.js. But the default image processing engine (lwip) is not compatible with io.js. so you need to install a compatible [engine](#image-processing-engines).
-
 ## Usage
 
 ### Programatic usage
@@ -55,9 +53,12 @@ var sprity = require('sprity');
 // generate sprite.png and _sprite.scss
 gulp.task('sprites', function () {
   return sprity.src({
-    src: './src/images'
+    src: './src/images/**/*.{png,jpg}',
+    style: './sprite.css',
     // ... other optional options
-  }})
+    // for example if you want to generate scss instead of css
+    processor: 'sass', // make sure you have installed sprity-sass
+  })
   .pipe(gulpif('*.png', gulp.dest('./dist/img/'), gulp.dest('./dist/css/')))
 });
 ```
@@ -86,7 +87,7 @@ See [grunt-sprity](https://npmjs.org/package/grunt-sprity) for how to use `sprit
 * **orientation**        orientation of the sprite image (vertical|horizontal|binary-tree)  [*Default:* vertical]
 * **prefix**             prefix for the class name used in css (without .)
 * **no-sort**            disable sorting of layout. Read more about: [Layout algorithms](https://github.com/twolfson/layout#algorithms)
-* **split**              create sprite images for every sub folder [*Default:* false]
+* **split**              create sprite images for every sub folder [*Default:* false] [How to use split option](#how-to-use-split-option)
 * **style-indent-char**  Character used for indentation of styles (space|tab) [*Default:* space]
 * **style-indent-size**  Number of characters used for indentation of styles  [*Default:* 2]
 
@@ -109,6 +110,56 @@ sprity out/ images/*.png -s style.css -d 1:72 -d 2:192
 ```
 
 You can provide as many dimensions as you want. Just keep in mind that the source images you provide need to be for the biggest dimension. For the above example the images would need to have 192dpi.
+
+## How to use split option
+
+When you enable the split option `sprity` will look at sub directories of the src option and will generate a sprite per sub directory.
+For example if you have the following directory structure:
+
+```
+src
+ |- icons
+      |- editor
+      |- file
+      |- maps
+      |- navigation
+      |- notification
+```
+
+and the options:
+
+```javascript
+var options = {
+  out: './dist',
+  src: './src/icons/**/*.png',
+  split: true
+}
+```
+
+`sprity` will generate the following sprites in ./dist:
+
+* sprite-editor.png
+* sprite-file.png
+* sprite-maps.png
+* sprite-navigation.png
+* sprite-notification.png
+
+With [sprity-cli](https://npmjs.org/package/sprity-cli) you would use the command:
+
+```sh
+sprity create "./dist" "src/sprites/**/*.png" --split
+```
+
+To change the name of the sprites to for example icons-editor.png use the name option:
+
+```javascript
+var options = {
+  out: './dist',
+  src: './src/icons/**/*.png',
+  split: true,
+  name: 'icons'
+}
+```
 
 ## Image processing engines
 

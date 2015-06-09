@@ -90,8 +90,7 @@ module.exports = {
       return !!opts.style;
     };
 
-    var stream = vfs.src(opts.src);
-    stream
+    var stream = vfs.src(opts.src)
       .pipe(tile(opts))
       .on('error', handleError(stream))
       .pipe(layout(opts))

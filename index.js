@@ -3,6 +3,7 @@
 var _ = require('lodash');
 var vfs = require('vinyl-fs');
 var ifStream = require('ternary-stream');
+var through2 = require('through2').obj;
 
 var tile = require('./lib/tile');
 var layout = require('./lib/layout');
@@ -39,10 +40,10 @@ var defaults = {
   }
 };
 
-var handleError = function (stream) {
+var handleError = function () {
   return function (err) {
     error = true;
-    stream.emit('error', err);
+    this.push(err);
   };
 };
 
@@ -92,15 +93,23 @@ module.exports = {
 
     var stream = vfs.src(opts.src)
       .pipe(tile(opts))
-      .on('error', handleError(stream))
+      .on('error', handleError())
       .pipe(layout(opts))
-      .on('error', handleError(stream))
+      .on('error', handleError())
       .pipe(sprite(opts))
-      .on('error', handleError(stream))
+      .on('error', handleError())
       .pipe(ifStream(hasStyle, style(opts)))
-      .on('error', handleError(stream))
+      .on('error', handleError())
       .pipe(toVinyl(opts))
-      .on('error', handleError(stream));
+      .on('error', handleError())
+      .pipe(through2(function (obj, enc, cb) {
+        if (obj instanceof Error) {
+          cb(obj, null);
+        }
+        else {
+          cb(null, obj);
+        }
+      }));
 
     return stream;
   }

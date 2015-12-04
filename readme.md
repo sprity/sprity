@@ -86,7 +86,7 @@ See [grunt-sprity](https://npmjs.org/package/grunt-sprity) for how to use `sprit
 * **opacity**            background opacity (0 - 100) of the sprite. defaults to 0 when png or 100 when jpg [*Default:* 0]
 * **orientation**        orientation of the sprite image (vertical|horizontal|binary-tree)  [*Default:* vertical]
 * **prefix**             prefix for the class name used in css (without .)
-* **no-sort**            disable sorting of layout. Read more about: [Layout algorithms](https://github.com/twolfson/layout#algorithms)
+* **sort**               set it to false to disable layout sorting. Read more about: [Layout algorithms](https://github.com/twolfson/layout#algorithms)
 * **split**              create sprite images for every sub folder [*Default:* false] [How to use split option](#how-to-use-split-option)
 * **style-indent-char**  Character used for indentation of styles (space|tab) [*Default:* space]
 * **style-indent-size**  Number of characters used for indentation of styles  [*Default:* 2]

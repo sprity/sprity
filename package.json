@@ -57,7 +57,7 @@
     "lodash": "^3.7.0",
     "nomnom": "^1.8.1",
     "parse-filepath": "^0.5.0",
-    "prettydiff": "^1.11.13",
+    "prettydiff": "1.11.13",
     "ternary-stream": "^1.2.3",
     "through2": "^0.6.5",
     "vinyl": "^0.4.6",

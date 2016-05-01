@@ -128,7 +128,7 @@ describe('sprity style (lib/style.js)', function () {
 
   it('should load template and return a stream with one style object', function (done) {
     var count = 0;
-    opts.template = '/test/template/template.hbs';
+    opts.template = 'test/template/template.hbs';
     os.fromArray([layouts])
       .pipe(style(opts))
       .pipe(spy(function (res) {

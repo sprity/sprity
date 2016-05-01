@@ -6,6 +6,7 @@ var style = require('../lib/style');
 var spy = require('through2-spy').obj;
 var layout = require('layout');
 var os = require('object-stream');
+var path = require('path');
 var noop = function () {};
 
 require('mocha');
@@ -128,7 +129,25 @@ describe('sprity style (lib/style.js)', function () {
 
   it('should load template and return a stream with one style object', function (done) {
     var count = 0;
-    opts.template = '/test/template/template.hbs';
+    opts.template = 'test/template/template.hbs';
+    os.fromArray([layouts])
+      .pipe(style(opts))
+      .pipe(spy(function (res) {
+        if (res.style) {
+          res.style.should.match(/.testClass.*/);
+          count++;
+        }
+      }))
+      .on('data', noop)
+      .on('finish', function () {
+        count.should.equal(1);
+        done();
+      });
+  });
+
+  it('should load template (absolute path) and return a stream with one style object', function (done) {
+    var count = 0;
+    opts.template = path.resolve('test/template/template.hbs');
     os.fromArray([layouts])
       .pipe(style(opts))
       .pipe(spy(function (res) {

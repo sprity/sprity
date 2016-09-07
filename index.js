@@ -31,6 +31,7 @@ var defaults = {
   'split': false,
   'style-indent-char': 'space',
   'style-indent-size': 2,
+  'handlebarHelpers': '',
   'logger': {
     log: noop,
     warn: noop,

@@ -65,7 +65,7 @@
   },
   "optionalDependencies": {
     "sprity-css": "^1.0.2",
-    "sprity-lwip": "^1.0.3"
+    "sprity-lwip": "^1.0.6"
   },
   "devDependencies": {
     "chai": "^2.2.0",

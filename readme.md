@@ -59,7 +59,7 @@ gulp.task('sprites', function () {
     // for example if you want to generate scss instead of css
     processor: 'sass', // make sure you have installed sprity-sass
   })
-  .pipe(gulpif('*.png', gulp.dest('./dist/img/'), gulp.dest('./dist/css/')))
+  .pipe(gulpif('*.{png,jpg}', gulp.dest('./dist/img/'), gulp.dest('./dist/css/')))
 });
 ```
 

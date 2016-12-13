@@ -4,6 +4,7 @@ var _ = require('lodash');
 var vfs = require('vinyl-fs');
 var ifStream = require('ternary-stream');
 var through2 = require('through2').obj;
+var naturalSort = require('gulp-natural-sort');
 
 var tile = require('./lib/tile');
 var layout = require('./lib/layout');
@@ -92,6 +93,7 @@ module.exports = {
     };
 
     var stream = vfs.src(opts.src)
+      .pipe(naturalSort())
       .pipe(tile(opts))
       .on('error', handleError())
       .pipe(layout(opts))

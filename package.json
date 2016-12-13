@@ -51,6 +51,7 @@
     "colors": "^1.0.3",
     "cssesc": "^0.1.0",
     "fs-extra": "^0.18.2",
+    "gulp-natural-sort": "^0.1.1",
     "handlebars": "^3.0.2",
     "imageinfo": "^1.0.4",
     "layout": "~2.2.0",

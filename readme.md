@@ -221,6 +221,7 @@ sprity out/ images/*.png -s style.scss --processor sprity-sass
 * [sprity-sass](https://npmjs.org/package/sprity-sass) - generates scss or sass files
 * [sprity-less](https://npmjs.org/package/sprity-less) - generates less files
 * [sprity-css-rollover](https://github.com/xErik/sprity-css-rollover) - generates css rollovers
+
 ### Write your own
 
 You can find more about how to write your own style processor in the [sprity wiki](https://github.com/sprity/sprity/wiki/How-to-write-a-sprity-style-processor)

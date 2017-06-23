@@ -106,7 +106,7 @@ Dimensions are used to specify different sizes of sprites. You can for example c
 On command line this would work as follows:
 
 ```sh
-sprity out/ images/*.png -s style.css -d 1:72 -d 2:192
+sprity create out/ images/*.png -s style.css -d 1:72 -d 2:192
 ```
 
 You can provide as many dimensions as you want. Just keep in mind that the source images you provide need to be for the biggest dimension. For the above example the images would need to have 192dpi.
@@ -178,9 +178,9 @@ npm install <engine-name>
 You can switch image engines with the engine option. If the image engine name starts with `sprity-` you can omit that. For example to use [sprity-canvas](https://npmjs.org/package/sprity-canvas):
 
 ```sh
-sprity out/ images/*.png -s style.css --engine canvas
+sprity create out/ images/*.png -s style.css --engine canvas
 # or
-sprity out/ images/*.png -s style.css --engine sprity-canvas
+sprity create out/ images/*.png -s style.css --engine sprity-canvas
 ```
 
 ### Available image processing engines
@@ -210,9 +210,9 @@ npm install <processor-name>
 You can switch style processors with the processor option. If the processor name starts with `sprity-` you can omit that. For example to use [sprity-sass](https://npmjs.org/package/sprity-sass):
 
 ```sh
-sprity out/ images/*.png -s style.scss --processor sass
+sprity create out/ images/*.png -s style.scss --processor sass
 # or
-sprity out/ images/*.png -s style.scss --processor sprity-sass
+sprity create out/ images/*.png -s style.scss --processor sprity-sass
 ```
 
 ### Available style processors

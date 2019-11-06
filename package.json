@@ -54,7 +54,7 @@
     "handlebars": "^3.0.2",
     "imageinfo": "^1.0.4",
     "layout": "~2.2.0",
-    "lodash": "^3.7.0",
+    "lodash": "^4.17.15",
     "nomnom": "^1.8.1",
     "parse-filepath": "^0.5.0",
     "prettydiff": "^1.11.13",

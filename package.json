@@ -51,7 +51,7 @@
     "colors": "^1.0.3",
     "cssesc": "^0.1.0",
     "fs-extra": "^0.18.2",
-    "handlebars": "^3.0.2",
+    "handlebars": "^4.5.1",
     "imageinfo": "^1.0.4",
     "layout": "~2.2.0",
     "lodash": "^3.7.0",

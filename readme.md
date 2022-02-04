@@ -1,3 +1,5 @@
+Main Project is dead so this will be archived now here
+
 # sprity
 
 [![NPM version](https://badge.fury.io/js/sprity.svg)](http://badge.fury.io/js/sprity) [![Build Status](https://travis-ci.org/sprity/sprity.svg?branch=master)](https://travis-ci.org/sprity/sprity) [![Coverage Status](https://img.shields.io/coveralls/sprity/sprity.svg)](https://coveralls.io/r/sprity/sprity) [![Code Climate](https://codeclimate.com/github/sprity/sprity/badges/gpa.svg)](https://codeclimate.com/github/sprity/sprity) [![Dependencies](https://david-dm.org/sprity/sprity.svg)](https://david-dm.org/sprity/sprity)
@@ -90,6 +92,7 @@ See [grunt-sprity](https://npmjs.org/package/grunt-sprity) for how to use `sprit
 * **split**              create sprite images for every sub folder [*Default:* false] [How to use split option](#how-to-use-split-option)
 * **style-indent-char**  Character used for indentation of styles (space|tab) [*Default:* space]
 * **style-indent-size**  Number of characters used for indentation of styles  [*Default:* 2]
+* **handlebarHelpers**   String to custom Handlebars helpers which are used in the template  [*Default:* not used]
 
 ## How to specify dimensions
 
@@ -234,6 +237,26 @@ If you don't want to write a processor module or you only need a simple template
 ### Available variables
 
 You can find more about the variables and functions available in the handlebars templates in the [sprity wiki](https://github.com/sprity/sprity/wiki/Available-variable-in-custom-templates)
+It is possible to extend the HandlebarJS functions through specifying a path to a helper js which could look like this
+
+```js
+  module.exports = function (Handlebars) {
+    return [
+      Handlebars.registerHelper('helloWorld', function () {
+        return 'Hello World';
+      }),
+      Handlebars.registerHelper('helloName', function (name) {
+        return 'Hello ' + name;
+      })
+    ];
+  };
+```
+and in the template
+```
+  {{helloWorld}}
+  {{helloName "Max"}}
+```
+
 
 ---
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sprity/sprity?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
